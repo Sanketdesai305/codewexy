@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js"
-import Ticket from "../models/Ticket.js"
 
 
 
@@ -33,41 +32,17 @@ const protect = (async (req, res, next) => {
     res.status(401).json('Not authorized, no token')
   }
 });
-//CHECK IF AUTHORIZED USER OR ADMIN
+//CHECK IF USER IS AUTHORIZED 
 const VerifyTokenAndAutherization = (req,res,next)=>{
-  protect(req,res,async ()=>{
-    const name = req.user.username;
-    console.log(name)
-    const bodyTicket = await Ticket.findById(req.body.ticketId)
-    console.log(bodyTicket);
-    const tickets = await Ticket.aggregate(
-      [ { $match : { assignedTo : name } } ]
-  );
-  const P =(tickets.map((ticket)=>{return ((ticket.priority).includes('high'))}))
-  const Pm = P.includes(true)
-  console.log(Pm)
-    if(name === bodyTicket.assignedTo && Pm!==true){
-      next();
-    }else if( req.user.isAdmin ===true){
+  protect(req,res,()=>{
+      if(req.user){
+         req.user.id
           next();
-      }else if(Pm===true){
-      const pending = JSON.stringify(tickets.filter((ticket)=>(ticket.priority).includes('high')))
-        res.status(200).send(`A higher priority task remains to be closed${pending}`)
-
       }else{
           res.status(403).json("you are not allowed to do that!")
       }
   });
 };
-//check if is admin
- const VerifyTokenAndAdmin = (req,res,next)=>{
-    protect(req,res,()=>{
-        if(req.user.isAdmin){
-            next();
-        }else{
-            res.status(403).json("you are not allowed to do that!")
-        }
-    });
-};
 
-export {VerifyTokenAndAdmin,VerifyTokenAndAutherization}
+
+export {VerifyTokenAndAutherization}

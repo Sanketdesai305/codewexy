@@ -16,6 +16,9 @@ router.post('/new', async(req,res)=>{
        //Save User
        const newUser = new User({
            username: req.body.username,
+           nickname: req.body.nickname,
+           total_products_on_sell:req.body.total_products_on_sell,
+           status:req.body.status,
        });
    
        const user = await newUser.save()
@@ -24,6 +27,11 @@ router.post('/new', async(req,res)=>{
            res.status(200).json({
                _id: user.id,
                username: user.username,
+               nickname: user.nickname,
+               total_products_on_sell: user.total_products_on_sell,
+               total_earning:user.total_earning,
+               total_balance:user.total_balance,
+               status:user.status,
                token:generateToken(user._id)
            })
        }catch(err){
@@ -39,13 +47,21 @@ router.post("/login", async(req,res)=>{
     
     //check if email exists
     const user = await User.findOne({username})
+    const status = user.status.includes(0)
     if(!user){
         res.status(400).json("wrong credentials!")
         //compare password with password in DB
+    }else if(status === true){
+        res.status(400).json("your status is 0 cannot login!")
     }else if(user){
         res.json({
             _id: user.id,
             username: user.username,
+            nickname: user.nickname,
+            total_products_on_sell: user.total_products_on_sell,
+            total_earning:user.total_earning,
+            total_balance:user.total_balance,
+            status:user.status,
             token:generateToken(user._id)
         })
     }else{

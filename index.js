@@ -1,5 +1,5 @@
 import express from "Express";
-import ticketRoute from "./Router/ticket.js";
+import productRoute from "./Router/product.js";
 import authRoute from "./Router/auth.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -14,7 +14,7 @@ mongoose.connect(process.env.URL).then(()=>{
 
 //Endpoints
 app.use('/users',authRoute)
-app.use('/tickets',ticketRoute)
+app.use('/products',productRoute)
 
 //Server connection
 app.listen(process.env.PORT || 5000,()=>{

@@ -6,10 +6,23 @@ const UserSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
-    isAdmin: {
-        type:Boolean,
-        default:false,
-
+    nickname:{
+        type:String,
+    },
+    total_products_on_sell:{
+        type:Number,
+        default:0,
+    },
+    total_earning:{
+        type:Number,
+        default:0,
+    },
+    total_balance:{
+        type:Number,
+        default:100,
+    },
+    status: {
+        type:[0,1,2],
     },
 
 });
