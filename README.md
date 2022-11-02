@@ -13,3 +13,5 @@ DOWNLOAD THE FILE AND OPEN IT ON A VISUAL STUDIO CODE.
 RUN 'NPM INTALL' IN THE COMMAND LINE
 RUN 'NPM START' IN THE COMMAND LINE
 TEST THE API ROUTES ON 'POSTMAN' OR 'INSOMNIA'.
+
+Link is a youtube video explanation : https://www.youtube.com/watch?v=PLvR3AwE9Do&t=5s&ab_channel=MrS
